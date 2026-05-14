@@ -26,6 +26,9 @@ type DB struct {
 }
 
 type Storage struct {
+	AccessKey  string
+	SecretKey  string
+	Region     string
 	BucketName string
 	DomainURL  string
 }
@@ -69,6 +72,9 @@ func LoadConfig(path string) (*Config, error) {
 			Schema:   viper.GetString("DB_SCHEMA"),
 		},
 		Storage: Storage{
+			AccessKey:  viper.GetString("AWS_ACCESS_KEY_ID"),
+			SecretKey:  viper.GetString("AWS_SECRET_ACCESS_KEY"),
+			Region:     viper.GetString("AWS_REGION"),
 			BucketName: viper.GetString("STORAGE_BUCKET_NAME"),
 			DomainURL:  viper.GetString("STORAGE_DOMAIN_URL"),
 		},

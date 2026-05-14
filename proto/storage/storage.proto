@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package storageproto;
+
+option go_package = "./storageproto";
+
+service Storage {
+  rpc Upload(UploadRequest) returns (UploadResponse);
+  rpc GetPresignedURL(GetPresignedURLRequest) returns (GetPresignedURLResponse);
+  rpc Delete(DeleteRequest) returns (DeleteResponse);
+}
+
+message UploadRequest {
+  bytes file = 1;
+}
+
+message UploadResponse {
+  string url = 1;
+  string error = 2;
+}
+
+message GetPresignedURLRequest {
+  string object_key = 1;
+}
+
+message GetPresignedURLResponse {
+  string url = 1;
+  string error = 2;
+}
+
+message DeleteRequest {
+  string object_key = 1;
+}
+
+message DeleteResponse {
+  string message = 1;
+  string error = 2;
+}

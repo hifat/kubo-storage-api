@@ -1,0 +1,1 @@
+[AWS S3 SDK](https://docs.aws.amazon.com/sdk-for-go/v2/developer-guide/go_s3_code_examples.html)

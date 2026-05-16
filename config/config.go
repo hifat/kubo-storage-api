@@ -8,10 +8,11 @@ import (
 )
 
 type App struct {
-	Name string
-	Host string
-	Port string
-	Mode string
+	Name   string
+	Host   string
+	Port   string
+	Mode   string
+	ApiKey string
 }
 
 type DB struct {
@@ -56,10 +57,11 @@ func LoadConfig(path string) (*Config, error) {
 
 	cfg := Config{
 		App: App{
-			Name: viper.GetString("APP_NAME"),
-			Host: viper.GetString("APP_HOST"),
-			Port: viper.GetString("APP_PORT"),
-			Mode: viper.GetString("APP_MODE"),
+			Name:   viper.GetString("APP_NAME"),
+			Host:   viper.GetString("APP_HOST"),
+			Port:   viper.GetString("APP_PORT"),
+			Mode:   viper.GetString("APP_MODE"),
+			ApiKey: viper.GetString("APP_API_KEY"),
 		},
 		DB: DB{
 			Protocol: viper.GetString("DB_PROTOCOL"),

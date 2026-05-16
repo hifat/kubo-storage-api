@@ -10,6 +10,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/credentials"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
 	"github.com/hifat/kubo-storage-api/config"
+	middlewaredi "github.com/hifat/kubo-storage-api/internal/middleware/di"
 	storagedi "github.com/hifat/kubo-storage-api/internal/storage/di"
 	"github.com/hifat/kubo-storage-api/pkg/logger"
 	storageproto "github.com/hifat/kubo-storage-api/proto/storage"
@@ -48,8 +49,10 @@ func main() {
 		o.UsePathStyle = true
 	})
 
-	storageDi := storagedi.Init(cfg, gfrLog, s3Client, s3.NewPresignClient(s3Client))
+	middlewareDi := middlewaredi.Init(cfg, gfrLog)
+	app.AddGRPCUnaryInterceptors(middlewareDi.GRPC.UnaryAuthInterceptor())
 
+	storageDi := storagedi.Init(cfg, gfrLog, s3Client, s3.NewPresignClient(s3Client))
 	storageproto.RegisterStorageServer(app, storageDi.GRPC)
 
 	app.Run()

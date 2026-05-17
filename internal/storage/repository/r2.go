@@ -27,9 +27,10 @@ func NewR2(cfg *config.Config, s3Client *s3.Client, presignClient *s3.PresignCli
 
 func (r *r2Repository) Upload(ctx context.Context, req *storagemdl.UploadRequest) (string, error) {
 	_, err := r.client.PutObject(ctx, &s3.PutObjectInput{
-		Bucket: aws.String(r.cfg.Storage.BucketName),
-		Key:    aws.String(req.ObjectKey),
-		Body:   bytes.NewReader(req.Body),
+		Bucket:      aws.String(r.cfg.Storage.BucketName),
+		Key:         aws.String(req.ObjectKey),
+		ContentType: aws.String(req.ContentType),
+		Body:        bytes.NewReader(req.Body),
 	})
 	if err != nil {
 		return "", err

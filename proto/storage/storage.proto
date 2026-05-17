@@ -12,6 +12,8 @@ service Storage {
 
 message UploadRequest {
   bytes file = 1;
+  string filename = 2;
+  string content_type = 3;
 }
 
 message UploadResponse {

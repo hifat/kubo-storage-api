@@ -21,8 +21,10 @@ func NewGRPC(service storagemdl.Service) *GRPC {
 
 func (h *GRPC) Upload(ctx context.Context, req *storageproto.UploadRequest) (*storageproto.UploadResponse, error) {
 	uploadReq := &storagemdl.UploadRequest{
-		ObjectKey: uuid.New().String(),
-		Body:      req.File,
+		ObjectKey:   uuid.New().String(),
+		Body:        req.File,
+		Filename:    req.Filename,
+		ContentType: req.ContentType,
 	}
 
 	url, err := h.service.Upload(ctx, uploadReq)

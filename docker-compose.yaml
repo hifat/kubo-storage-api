@@ -1,0 +1,28 @@
+# docker-compose.yml
+version: "3.8"
+
+services:
+  storage-api:
+    build: .
+    ports:
+      - "4000:4000"
+      - "9000:9000"
+    volumes:
+      - ./env/.env:/app/env/.env
+    environment:
+      - APP_MODE=prod
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:6
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 123456
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:

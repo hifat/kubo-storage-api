@@ -2,6 +2,7 @@ package storagesvc
 
 import (
 	"context"
+	"fmt"
 
 	storagemdl "github.com/hifat/kubo-storage-api/internal/storage"
 	"github.com/hifat/kubo-storage-api/pkg/logger"
@@ -20,6 +21,18 @@ func New(log logger.Logger, storageRepo storagemdl.Repository) storagemdl.Servic
 }
 
 func (s *service) Upload(ctx context.Context, req *storagemdl.UploadRequest) (string, error) {
+	if req.Path != "" {
+		if req.Path[0] == '/' {
+			req.Path = req.Path[1:]
+		}
+
+		if req.Path[len(req.Path)-1] == '/' {
+			req.Path = req.Path[:len(req.Path)-1]
+		}
+	}
+
+	req.ObjectKey = fmt.Sprintf("%s/%s", req.Path, req.ObjectKey)
+
 	url, err := s.storageRepo.Upload(ctx, req)
 	if err != nil {
 		s.log.Error(ctx, err)

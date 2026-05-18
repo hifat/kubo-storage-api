@@ -25,6 +25,7 @@ func (h *GRPC) Upload(ctx context.Context, req *storageproto.UploadRequest) (*st
 		Body:        req.File,
 		Filename:    req.Filename,
 		ContentType: req.ContentType,
+		Path:        req.Path,
 	}
 
 	url, err := h.service.Upload(ctx, uploadReq)

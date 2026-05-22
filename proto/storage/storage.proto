@@ -19,8 +19,9 @@ message UploadRequest {
 
 message UploadResponse {
   string url = 1;
-  string object_key = 2;
-  string error = 3;
+  string filename = 2;
+  string object_key = 3;
+  string error = 4;
 }
 
 message GetPresignedURLRequest {

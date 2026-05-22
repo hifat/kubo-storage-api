@@ -20,7 +20,7 @@ func New(log logger.Logger, storageRepo storagemdl.Repository) storagemdl.Servic
 	}
 }
 
-func (s *service) Upload(ctx context.Context, req *storagemdl.UploadRequest) (string, error) {
+func (s *service) Upload(ctx context.Context, req *storagemdl.UploadRequest) (*storagemdl.UploadResponse, error) {
 	if req.Path != "" {
 		if req.Path[0] == '/' {
 			req.Path = req.Path[1:]
@@ -36,10 +36,13 @@ func (s *service) Upload(ctx context.Context, req *storagemdl.UploadRequest) (st
 	url, err := s.storageRepo.Upload(ctx, req)
 	if err != nil {
 		s.log.Error(ctx, err)
-		return "", err
+		return nil, err
 	}
 
-	return url, nil
+	return &storagemdl.UploadResponse{
+		ObjectKey: req.ObjectKey,
+		URL:       url,
+	}, nil
 }
 
 func (s *service) GetPresignedURL(ctx context.Context, objectKey string) (*storagemdl.PresignedResponse, error) {

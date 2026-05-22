@@ -36,7 +36,8 @@ func (h *GRPC) Upload(ctx context.Context, req *storageproto.UploadRequest) (*st
 	}
 
 	return &storageproto.UploadResponse{
-		Url: url,
+		ObjectKey: uploadReq.ObjectKey,
+		Url:       url.URL,
 	}, nil
 }
 

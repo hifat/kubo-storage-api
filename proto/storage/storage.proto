@@ -19,7 +19,8 @@ message UploadRequest {
 
 message UploadResponse {
   string url = 1;
-  string error = 2;
+  string object_key = 2;
+  string error = 3;
 }
 
 message GetPresignedURLRequest {

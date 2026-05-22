@@ -11,7 +11,7 @@ type Repository interface {
 }
 
 type Service interface {
-	Upload(ctx context.Context, req *UploadRequest) (string, error)
+	Upload(ctx context.Context, req *UploadRequest) (*UploadResponse, error)
 	GetPresignedURL(ctx context.Context, objectKey string) (*PresignedResponse, error)
 	Delete(ctx context.Context, objectKey string) error
 }

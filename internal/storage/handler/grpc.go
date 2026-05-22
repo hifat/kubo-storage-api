@@ -28,7 +28,7 @@ func (h *GRPC) Upload(ctx context.Context, req *storageproto.UploadRequest) (*st
 		Path:        req.Path,
 	}
 
-	url, err := h.service.Upload(ctx, uploadReq)
+	res, err := h.service.Upload(ctx, uploadReq)
 	if err != nil {
 		return &storageproto.UploadResponse{
 			Error: err.Error(),
@@ -37,8 +37,8 @@ func (h *GRPC) Upload(ctx context.Context, req *storageproto.UploadRequest) (*st
 
 	return &storageproto.UploadResponse{
 		Filename:  uploadReq.Filename,
-		ObjectKey: uploadReq.ObjectKey,
-		Url:       url.URL,
+		ObjectKey: res.ObjectKey,
+		Url:       res.URL,
 	}, nil
 }
 
